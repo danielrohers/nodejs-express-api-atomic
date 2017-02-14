@@ -1,6 +1,6 @@
 {
   "name": "nodejs-express-api-atomic",
-  "description": "API application featuring Node.js, Express and MongoDB",
+  "description": "Atomic API application featuring Node.js, Express and MongoDB",
   "version": "0.0.1",
   "scripts": {
     "start": "node ./bin/www",
