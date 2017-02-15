@@ -1,5 +1,6 @@
 const express = require('express');
-const controller = require('../controllers/foo');
+
+const foo = action => require(`../controllers/foo/${action}`);
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ router
   * @apiSuccess {Boolean} success=true
   * @apiSuccess {Foo[]} data
   */
-  .get(controller.list)
+  .get(foo('list'))
 
   /**
   * @api {post} /foo Create
@@ -24,7 +25,7 @@ router
   * @apiSuccess {Boolean} success=true
   * @apiSuccess {Foo} data
   */
-  .post(controller.create);
+  .post(foo('create'));
 
 router
   .route('/:id')
@@ -36,7 +37,7 @@ router
   * @apiSuccess {Boolean} success=true
   * @apiSuccess {Foo} data
   */
-  .get(controller.findById)
+  .get(foo('findById'))
 
   /**
   * @api {put} /foo/:id Update
@@ -46,7 +47,7 @@ router
   *
   * @apiSuccess {Boolean} success=true
   */
-  .put(controller.update)
+  .put(foo('update'))
 
   /**
   * @api {delete} /foo/:id Delete
@@ -54,6 +55,6 @@ router
   *
   * @apiSuccess {Boolean} success=true
   */
-  .delete(controller.delete);
+  .delete(foo('delete'));
 
 module.exports = router;
