@@ -1,7 +1,7 @@
 const serveStatic = require('serve-static');
 const path = require('path');
-const query = require('../app/middlewares/query');
 
+const getMiddleware = module => require(`../app/middlewares/${module}`);
 const getRoute = module => require(`../app/routes/${module}`);
 
 module.exports = (app) => {
@@ -11,7 +11,7 @@ module.exports = (app) => {
 
   // MIDDLEWARES
 
-  app.use(query);
+  app.use(getMiddleware('query'));
 
   // ROUTES
 
@@ -21,14 +21,8 @@ module.exports = (app) => {
   // ERROR HANDLERS
 
   // catch 404 and forward to error handler
-  app.use((req, res) => {
-    res.status(404).json({ message: 'Not found' });
-  });
+  app.use(getMiddleware('notFound'));
 
   // error handler
-  app.use((err, req, res) => {
-    const message = err.message;
-    const error = app.get('env') === 'development' ? err : {};
-    res.status(err.status || 500).json({ message, error });
-  });
+  app.use(getMiddleware('errorHandler')(app));
 };
